@@ -1,3 +1,5 @@
+using RPCServer.Models.TimeZoneMapper;
+using RPCServer.Models.TimeZoneMapper.Implementations;
 using RPCServer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
+builder.Services.AddSingleton<ITimeZoneMapper, TimeZoneMapper>();
+
 
 var app = builder.Build();
 
