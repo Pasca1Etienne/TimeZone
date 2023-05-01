@@ -6,6 +6,8 @@ using RPCClient;
 using var channel = GrpcChannel.ForAddress("https://localhost:7117");
 while(true)
 {
+    Console.WriteLine("Write <<greet>> to get greeted.");
+    Console.WriteLine("Write <<time>> to get the time.");
     var input = Console.ReadLine();
     switch (input)
     {
@@ -27,12 +29,24 @@ Console.ReadKey();
 async Task Greet()
 {
     var client = new Greeter.GreeterClient(channel);
-    var reply = await client.SayHelloAsync(new HelloRequest { Name = "GreeterClient" });
+
+    Console.WriteLine("Enter your name:");
+    var input = Console.ReadLine();
+    var reply = await client.SayHelloAsync(new HelloRequest { Name = input });
     Console.WriteLine("Greeting: " + reply.Message);
 }
 async Task GetTime()
 {
     var client = new Clock.ClockClient(channel);
-    var reply = await client.GetTimeAsync(new TimeRequest { Timezone = "GreeterClient" });
-    Console.WriteLine("Time: " + reply.Message);
+
+    Console.WriteLine("Enter your timezone:");
+    var input = Console.ReadLine();
+    var reply = await client.GetTimeAsync(new TimeRequest { Timezone = input });
+    
+    if (reply is null)
+        return;
+    
+    var ticks = reply.Message;
+    var time = new DateTime(ticks);
+    Console.WriteLine("Time: " + time);
 }
