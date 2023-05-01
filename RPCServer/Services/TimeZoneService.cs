@@ -3,9 +3,9 @@ using RPCServer;
 
 namespace RPCServer.Services
 {
-    public class TimeZoneService
+    public class TimeZoneService : Clock.ClockBase
     {
-        public Task<TimeReply> GetTime(TimeRequest request, ServerCallContext context)
+        public override Task<TimeReply> GetTime(TimeRequest request, ServerCallContext context)
         {
             var currentTime = DateTime.UtcNow;
             return Task.FromResult<TimeReply>(new TimeReply()
