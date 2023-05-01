@@ -1,0 +1,21 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "RPCClient";
+
+package clock;
+
+// The greeting service definition.
+service Clock {
+  // Sends a greeting
+  rpc GetTime (TimeRequest) returns (TimeReply);
+}
+
+// The request message containing the user's name.
+message TimeRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings.
+message TimeReply {
+  string message = 1;
+}
